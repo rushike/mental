@@ -12,6 +12,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Auth from './auth';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { LogInUser } from './auth_slice';
 
 function Copyright(props) {
   return (
@@ -29,13 +34,23 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
+
+  const [email, set_email] = useState();
+  const [password, set_password] = useState();
+  const [firstname, set_firstname] = useState();
+  const [lastname, set_lastname] = useState();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const user = await Auth.createUser(email, password, {firstname, lastname})
+    dispatch(LogInUser(user))
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email
     });
+    navigate("/")
   };
 
   return (
@@ -67,6 +82,8 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value = {firstname}
+                  onChange = {e=>set_firstname(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -77,6 +94,8 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  value = {lastname}
+                  onChange = {e=>set_lastname(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -87,6 +106,8 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value = {email}
+                  onChange = {e=>set_email(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -98,12 +119,14 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value = {password}
+                  onChange = {e=>set_password(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  label="I want to receive inspiration from articles overemail."
                 />
               </Grid>
             </Grid>

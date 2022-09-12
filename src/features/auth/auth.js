@@ -1,9 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, signOut, signInWithPopup,getRedirectResult, signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signOut, signInWithPopup,updateProfile, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
 import { GOOGLE, USER_PASS } from "../../constants";
 
-import store from '../../app/store';
+import store, {pstore} from '../../app/store';
 
 import {SetToken, LogInUser, LogOutUser} from "./auth_slice"
 
@@ -23,17 +23,32 @@ const auth = getAuth();
 
 class Auth {
     async login(provider, email = null, password = null) { 
-      if (provider == GOOGLE) return await this.googleSignIn()
-      if (provider == USER_PASS) return await this.userPassAuth(email, password)
+      var user;
+      if (provider == GOOGLE) user = await this.googleSignIn()
+      if (provider == USER_PASS) user = await this.userPassSignIn(email, password)
+      store.dispatch(LogInUser(this.getUser(user)))
+      return user
     }
 
-    async userPassAuth(email, password) {
-      return null
+    async createUser(email, password, options = {}){
+      const credentials = await createUserWithEmailAndPassword(auth, email, password)
+      const user = credentials.user
+      // pstore.dispatch(LogInUser(this.getUser(user)))
+      await updateProfile(user, {
+        displayName: user.email.split("@")[0],
+        firstname : options["firstname"],
+        lastname : options["lastname"]
+      })
+      return user
+    }
+
+    async userPassSignIn(email, password) {
+      const credentials = await signInWithEmailAndPassword(auth, email, password)
+      return credentials.user
     }
 
     async googleSignIn() {
         const provider = new GoogleAuthProvider();
-        console.log("Sign In with Pop Up");
         // await signInWithRedirect(auth, provider)
         // const res = await getRedirectResult(auth)
         const res = await signInWithPopup(auth, provider)
@@ -46,13 +61,13 @@ class Auth {
 
         store.dispatch(SetToken(token));
         // store.dispatch(LogInUser(this.getUser(res.user)));
-        return this.getUser(res.user);
+        return res.user;
     }
 
     async logOut(){
       const res = await signOut(auth);
       store.dispatch(SetToken(null));
-      // store.dispatch(LogOutUser()); 
+      // pstore.dispatch(LogOutUser()); 
       return null;
     }
 

@@ -30,6 +30,9 @@ import {GOOGLE, USER_PASS} from "../../constants"
 
 import {ColoredLine} from '../common'
 
+import  {Try} from "../../utils"
+import { useState } from 'react';
+
 
 function Copyright(props) {
   return (
@@ -46,14 +49,17 @@ function Copyright(props) {
 
 const theme = createTheme();
 
+
 export default function LogIn() {
   const navigate = useNavigate();
+  const [email, set_email] = useState("")
+  const [password, set_password] = useState(null)
   const auth = useSelector((state) => state.auth)
   const dispatch = useDispatch()
-  const onClickLogin = (provider, email = null, password = null) =>{
-
+  const onClickLogin = (e, provider) =>{
     Auth.login(provider, email, password)
     .then(user => {
+      console.log("user : ", user)
       dispatch(LogInUser(user))
     })
   }
@@ -86,7 +92,7 @@ export default function LogIn() {
           <Typography component="h1" variant="h5">
             Log in
           </Typography>
-          <Box component="form" onSubmit={e=>onClickLogin(USER_PASS)} noValidate sx={{ mt: 1 }}>
+          <Box noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -96,6 +102,8 @@ export default function LogIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange = {e=>set_email(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -106,6 +114,8 @@ export default function LogIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange = {e=>set_password(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -116,6 +126,7 @@ export default function LogIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick = {e=>onClickLogin(e, USER_PASS)}
             >
               Sign In
             </Button>
@@ -141,7 +152,7 @@ export default function LogIn() {
               <Button variant="outlined" 
                 style = {{width : "100%"}}
                 color="error" startIcon={<img src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/48px-Google_%22G%22_Logo.svg.png?20210618182606" />} 
-                onClick = {e=>onClickLogin(GOOGLE)}>
+                onClick = {e=>onClickLogin(e, GOOGLE)}>
                 <Typography component="h3" variant="h6">Google</Typography>
               </Button>
             </Grid>

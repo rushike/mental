@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { PersistGate } from 'redux-persist/integration/react';
+import { PersistGate } from 'reduxjs-toolkit-persist/integration/react';
 
 import './index.css';
 import App from './App';
