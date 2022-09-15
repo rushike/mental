@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import AppBar from './features/appbar/AppBar'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import OutCome from './features/outcomes/OutCome';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/login" element={<LogIn/>}/>
         <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/feedback" element={<OutCome/>}/>
       </Routes>
     </BrowserRouter>
   );
