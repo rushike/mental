@@ -4,6 +4,9 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function Userprofile() {
   const [expanded, setExpanded] = React.useState(false);
@@ -14,14 +17,26 @@ export default function Userprofile() {
 
   return (
     <div>
+     <Grid container>
+     <Grid item xs={1}>
+        </Grid>
+    <Grid item xs={7}>
+        <Typography style={{fontWeight:700}}>
+        User Info
+        </Typography>
+        </Grid>
+    <Grid item xs={4}>
+    <Button variant="outlined" style={{width: "100%"}}>Edit<EditIcon fontSize='small'/></Button>
+        </Grid>  
+    </Grid>
       <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+        //   expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
           <Typography sx={{ width: '33%', flexShrink: 0 }}>
-            Name - 
+            Name
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>Brian</Typography>
         </AccordionSummary>
@@ -32,7 +47,7 @@ export default function Userprofile() {
       </Accordion>
       <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+        //   expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2bh-content"
           id="panel2bh-header"
         >
@@ -48,7 +63,7 @@ export default function Userprofile() {
       </Accordion>
       <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+        //   expandIcon={<ExpandMoreIcon />}
           aria-controls="panel3bh-content"
           id="panel3bh-header"
         >
@@ -66,7 +81,7 @@ export default function Userprofile() {
       </Accordion>
       <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+        //   expandIcon={<ExpandMoreIcon />}
           aria-controls="panel4bh-content"
           id="panel4bh-header"
         >
