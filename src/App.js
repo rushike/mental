@@ -9,6 +9,7 @@ import AppBar from './features/appbar/AppBar'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import OutCome from './features/outcomes/OutCome';
+import Userprofile from './features/user_profile/Userprofile';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<LogIn/>}/>
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/feedback" element={<OutCome/>}/>
+        <Route path="/user" element={<Userprofile/>}/>
       </Routes>
     </BrowserRouter>
   );
