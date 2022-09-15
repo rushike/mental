@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
+import { Progress_bar } from './Progress_bar';
 
 export default function Userprofile() {
   const [expanded, setExpanded] = React.useState(false);
@@ -95,16 +96,17 @@ export default function Userprofile() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel4')}>
+      <Accordion expanded onChange={handleChange('panel4')}>
         <AccordionSummary
           aria-controls="panel4bh-content"
           id="panel4bh-header"
         >
           <Typography sx={{ width: '33%', flexShrink: 0 }}>Progress</Typography>
+          <Progress_bar/>
+
         </AccordionSummary>
+
         <AccordionDetails>
-          <Typography>
-          </Typography>
         </AccordionDetails>
       </Accordion>
     </div>
