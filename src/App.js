@@ -11,6 +11,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import OutCome from './features/outcomes/OutCome';
 import Userprofile from './features/user_profile/Userprofile';
 import Endpage from './features/end_page/Endpage';
+import Admin from './features/aDmiN/Admin';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/feedback" element={<OutCome/>}/>
         <Route path="/user" element={<Userprofile/>}/>
         <Route path="/sessionend" element={<Endpage/>}/>
+        <Route path="/admin" element={<Admin/>}/>
       </Routes>
     </BrowserRouter>
   );
